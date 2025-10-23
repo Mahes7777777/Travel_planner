@@ -1,0 +1,15 @@
+# Ignore environment and sensitive files
+.env
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore data backups and cache
+.DS_Store
+*.log
+
+# Ignore virtual environments
+venv/
+.env/
+

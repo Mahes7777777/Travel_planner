@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 import streamlit as st
 from langgraph.graph import StateGraph
 from langchain_groq import ChatGroq
@@ -7,9 +8,11 @@ from langchain_groq import ChatGroq
 # Initialize LLM
 # -----------------------
 
-API_KEY = os.environ.get("CHATGROQ_API_KEY")
+
+load_dotenv()
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 llm = ChatGroq(
-    groq_api_key=API_KEY,
+    groq_api_key=GROQ_API_KEY,
     model_name="llama-3.3-70b-versatile",
     temperature=0.01
 )
@@ -19,7 +22,7 @@ llm = ChatGroq(
 # -----------------------
 def get_travel_input(state):
     state["travel_input"] = {
-        "destination": st.session_state.get("destination", ""),
+        "destination": st.session_state.get("destination", "Zurich"),
         "area": st.session_state.get("area", "Zurich"),
         "duration_days": st.session_state.get("duration_days", 7),
         "budget": st.session_state.get("budget", 250000),
@@ -120,16 +123,11 @@ st.title("LangGraph Traveller Agent")
 # Travel Input Form
 with st.form("travel_form"):
     st.subheader("Enter Travel Details")
-    st.text_input("Destination", key="destination", value="",placeholder="Type your City")
-    st.text_input("Area / Locality", key="area", value="",placeholder="Type your area")
-    st.number_input("Duration (days)", key="duration_days", max_value=30,value=0)
-    st.number_input("Budget (₹)", key="budget", step=1000, value=0)
-    st.selectbox(
-    "Travel Type",
-    key="travel_type",
-    options=["Budget", "Standard", "Luxury"],  # Multiple options
-    index=0  # Default selection, yaha 0 matlab "Budget"
-)
+    st.text_input("Destination", key="destination", value="")
+    st.text_input("Area / Locality", key="area", value="")
+    st.number_input("Duration (days)", key="duration_days", max_value=30, value=0)
+    st.number_input("Budget (₹)", key="budget", min_value=1000, step=1000)
+    st.selectbox("Travel Type", key="travel_type", options=["budget", "standard", "luxury"])
     st.multiselect(
         "Interests",
         key="interests",
@@ -142,10 +140,12 @@ with st.form("travel_form"):
 if submitted:
     st.info("Generating travel plan...")
     try:
-        # Compile the graph and get executable
+        # Step 1: Compile the graph
         compiled_graph = graph.compile()
-        # Run the graph
-        result = compiled_graph.invoke({})
+        
+        # Step 2: Invoke the compiled graph
+        result = compiled_graph.invoke({})  # invoke works on compiled graph only
+        
         st.success("Travel Plan Generated!")
         st.markdown(result["summary"])
     except Exception as e:
