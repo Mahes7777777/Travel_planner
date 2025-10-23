@@ -1,5 +1,7 @@
-To run this project, create a .env file with your own API key:
-GROQ_API_KEY=gsk_XXXXXXXXXXXXXXXX
+1. Create a `.env` file in the project root.
+2. Add your Groq API key:
+
+GROQ_API_KEY=gsk_XXXXXXXXXXXXXXXXXXXXXXXXX
 
 🧳 Traveller Agent — Streamlit App
 
