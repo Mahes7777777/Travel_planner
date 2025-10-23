@@ -1,3 +1,6 @@
+To run this project, create a .env file with your own API key:
+GROQ_API_KEY=gsk_XXXXXXXXXXXXXXXX
+
 🧳 Traveller Agent — Streamlit App
 
 An AI-powered travel planner built using Streamlit, LangGraph, and ChatGroq LLM.
