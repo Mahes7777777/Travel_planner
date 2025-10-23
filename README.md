@@ -46,14 +46,13 @@ Folder Structure:
 traveller_agent/
 │
 ├── app/
-│   ├── __init__.py
-│   ├── streamlit_travel_app.py      # 👉 main Streamlit UI
-│   ├── travel_logic.py              # 👉 core travel logic functions
-│   └── utils.py                     # 👉 helper utilities (prompt builders, text cleaners)
+│   ├── streamlit_travel_app.py      # 👉 main Streamlit UI                               
 │
-├── data/                            # 👉 optional saved travel data or configs
+├── data/
+|   ├── sample_data.json                                # 👉 optional saved travel data or configs
 ├── requirements.txt
 └── README.md
+|── .gitignore
 
 
 
