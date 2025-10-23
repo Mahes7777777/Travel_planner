@@ -1,3 +1,5 @@
+.env
+password.txt
 # Ignore environment and sensitive files
 .env
 __pycache__/
